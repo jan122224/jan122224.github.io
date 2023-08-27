@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="javascript">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多角形時計</title>
+</head>
+<body>
+    <p id="t"></p>
+    <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+    <script>
+        setInterval(function() {
+            let date = new Date();  
+            let time = date.toString().substr(16,8);
+            document.getElementById("t").innerText =  time;
+        }, 1000 / 60); 
+
+        function setup() {
+            createCanvas(400, 400);
+        };
+        
+        function draw() {
+            background('black');
+            
+            SECOND();
+            
+            MINUTE();
+
+            HOUR();
+        };
+
+        function SECOND() {
+            let n = second();
+            if (second() > 30) {
+                n = 60 - second();
+            };
+            let cx = width / 2;
+            let cy = height / 2;
+            let d = 120
+            
+            for (let i = 0; i <= n; i++) {
+                stroke('white');
+                strokeWeight(2);
+                line(cx + d * cos(TWO_PI / n * (i + n * second()  / 60) - TWO_PI / 4),
+                 cy + d * sin(TWO_PI / n * (i + n * second() / 60) - TWO_PI / 4),
+                 cx + d * cos(TWO_PI / n * (i + n * second() / 60 + 1) - TWO_PI / 4),
+                 cy + d * sin(TWO_PI / n * (i + n * second() / 60 + 1) - TWO_PI / 4));
+            };
+            fill('white');
+            text(second(), cx - 10 + (d + 20) * cos(TWO_PI * second() / 60 - TWO_PI / 4), cy + (d + 20) * sin(TWO_PI * second() / 60 - TWO_PI / 4));
+            textSize(15);
+        };
+
+        function MINUTE() {
+            let n = minute();
+            if (minute() > 30) {
+                n = 60 - minute();
+            };
+            let cx = width / 2;
+            let cy = height / 2;
+            let d = 110
+            
+            for (let i = 0; i <= n; i++) {
+                stroke('white');
+                strokeWeight(2);
+                line(cx + d * cos(TWO_PI / n * (i + n * minute()  / 60) - TWO_PI / 4),
+                 cy + d * sin(TWO_PI / n * (i + n * minute() / 60) - TWO_PI / 4),
+                 cx + d * cos(TWO_PI / n * (i + n * minute() / 60 + 1) - TWO_PI / 4),
+                 cy + d * sin(TWO_PI / n * (i + n * minute() / 60 + 1) - TWO_PI / 4));
+            };
+            fill('white');
+            text(minute(), cx - 10 +  (d + 20) * cos(TWO_PI * minute() / 60 - TWO_PI / 4), cy + (d + 20) * sin(TWO_PI * minute() / 60 - TWO_PI / 4));
+            textSize(15);
+        };
+    
+        function HOUR() {
+            let n = hour() ;
+            if (hour() > 12) {
+                n = 24 - hour() ;
+            };
+            let cx = width / 2;
+            let cy = height / 2;
+            let d = 100
+            
+            for (let i = 0; i <= n; i++) {
+                stroke('white');
+                strokeWeight(2);
+                line(cx + d * cos(TWO_PI / n * (i + n * hour()   / 24) - TWO_PI / 4),
+                 cy + d * sin(TWO_PI / n * (i + n * hour()  / 24) - TWO_PI / 4),
+                 cx + d * cos(TWO_PI / n * (i + n * hour()  / 24 + 1) - TWO_PI / 4),
+                 cy + d * sin(TWO_PI / n * (i + n * hour()  / 24 + 1) - TWO_PI / 4));
+            };
+            fill('white');
+            text(hour() , cx - 10 + (d + 20) * cos(TWO_PI * hour()  / 24 - TWO_PI / 4), cy + (d + 20) * sin(TWO_PI * hour()  / 24 - TWO_PI / 4));
+            textSize(15);
+        };
+    </script>
+</body>
+
+</html>
