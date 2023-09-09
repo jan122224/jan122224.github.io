@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>多角形時計</title>
+    <title>針時計その１</title>
 </head>
 <body>
     <p id="t"></p>
@@ -13,86 +13,47 @@
             let date = new Date();  
             let time = date.toString().substr(16,8);
             document.getElementById("t").innerText =  time;
-        }, 1000 / 60); 
+        }, 1000 / 60);
+        
+        let time = new Date(); 
 
         function setup() {
-            createCanvas(400, 400);
+        createCanvas(450, 400);
         };
         
         function draw() {
-            background('black');
-            
-            SECOND();
-            
-            MINUTE();
+        background('black');
+        
+        fill('white');
+        text("", 50, 200);
+        
+        fill('black');
+        stroke(0);
+        ellipse(width / 2, height / 2, 100);
 
-            HOUR();
-        };
+        fill('white');
+        text(hour(), 400 / 24 * hour(), 100);
+        textSize(30);
 
-        function SECOND() {
-            let n = second();
-            if (second() > 30) {
-                n = 60 - second();
-            };
-            let cx = width / 2;
-            let cy = height / 2;
-            let d = 120
-            
-            for (let i = 0; i <= n; i++) {
-                stroke('white');
-                strokeWeight(2);
-                line(cx + d * cos(TWO_PI / n * (i + n * second()  / 60) - TWO_PI / 4),
-                 cy + d * sin(TWO_PI / n * (i + n * second() / 60) - TWO_PI / 4),
-                 cx + d * cos(TWO_PI / n * (i + n * second() / 60 + 1) - TWO_PI / 4),
-                 cy + d * sin(TWO_PI / n * (i + n * second() / 60 + 1) - TWO_PI / 4));
-            };
-            fill('white');
-            text(second(), cx - 10 + (d + 20) * cos(TWO_PI * second() / 60 - TWO_PI / 4), cy + (d + 20) * sin(TWO_PI * second() / 60 - TWO_PI / 4));
-            textSize(15);
-        };
+        fill('white');
+        text(minute(), 400 / 60 * minute(), 150);
+        textSize(30);
+        
+        fill('white');
+        text(second(), 400 / 60 * second(), 200);
+        textSize(30);
 
-        function MINUTE() {
-            let n = minute();
-            if (minute() > 30) {
-                n = 60 - minute();
-            };
-            let cx = width / 2;
-            let cy = height / 2;
-            let d = 110
-            
-            for (let i = 0; i <= n; i++) {
-                stroke('white');
-                strokeWeight(2);
-                line(cx + d * cos(TWO_PI / n * (i + n * minute()  / 60) - TWO_PI / 4),
-                 cy + d * sin(TWO_PI / n * (i + n * minute() / 60) - TWO_PI / 4),
-                 cx + d * cos(TWO_PI / n * (i + n * minute() / 60 + 1) - TWO_PI / 4),
-                 cy + d * sin(TWO_PI / n * (i + n * minute() / 60 + 1) - TWO_PI / 4));
-            };
-            fill('white');
-            text(minute(), cx - 10 +  (d + 20) * cos(TWO_PI * minute() / 60 - TWO_PI / 4), cy + (d + 20) * sin(TWO_PI * minute() / 60 - TWO_PI / 4));
-            textSize(15);
-        };
-    
-        function HOUR() {
-            let n = hour() ;
-            if (hour() > 12) {
-                n = 24 - hour() ;
-            };
-            let cx = width / 2;
-            let cy = height / 2;
-            let d = 100
-            
-            for (let i = 0; i <= n; i++) {
-                stroke('white');
-                strokeWeight(2);
-                line(cx + d * cos(TWO_PI / n * (i + n * hour()   / 24) - TWO_PI / 4),
-                 cy + d * sin(TWO_PI / n * (i + n * hour()  / 24) - TWO_PI / 4),
-                 cx + d * cos(TWO_PI / n * (i + n * hour()  / 24 + 1) - TWO_PI / 4),
-                 cy + d * sin(TWO_PI / n * (i + n * hour()  / 24 + 1) - TWO_PI / 4));
-            };
-            fill('white');
-            text(hour() , cx - 10 + (d + 20) * cos(TWO_PI * hour()  / 24 - TWO_PI / 4), cy + (d + 20) * sin(TWO_PI * hour()  / 24 - TWO_PI / 4));
-            textSize(15);
+        stroke('white');
+        strokeWeight(1);
+        line(width, height, 400 / 60 * second() + 20, 210);
+
+        stroke('white');
+        strokeWeight(2);
+        line(width, height, 400 / 60 * minute() + 20, 160);
+
+        stroke('white');
+        strokeWeight(3);
+        line(width, height, 400 / 24 * hour() + 20, 110);
         };
     </script>
 </body>
