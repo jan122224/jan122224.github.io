@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="javascript">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>針時計</title>
+</head>
+<body>
+    <p id="t"></p>
+    <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+    <script>
+        setInterval(function() {
+            let date = new Date();  
+            let time = date.toString().substr(16,8);
+            document.getElementById("t").innerText =  time;
+        }, 1000 / 60);
+    
+        function setup() {
+        createCanvas(400, 400);
+        };
+        
+        function draw() {
+        background('black');
+        
+        stroke('white');
+        strokeWeight(1);
+        line(width / 2, height / 2, width / 2 + 100 * cos(TWO_PI* second() / 60 - TWO_PI / 4), height / 2 + 100 * sin(TWO_PI * second() /60 - TWO_PI / 4));
+
+        stroke('white');
+        strokeWeight(4);
+        line(width / 2, height / 2, width / 2 + 100 * cos(TWO_PI* minute() / 60 - TWO_PI / 4), height / 2 + 100 * sin(TWO_PI * minute() /60 - TWO_PI / 4));
+
+        stroke('white');
+        strokeWeight(8);
+        line(width / 2, height / 2, width / 2 + 50 * cos(TWO_PI* hour() / 12 + TWO_PI* minute() / 60 /24 - TWO_PI / 4), height / 2 + 50 * sin(TWO_PI * hour() / 12 + TWO_PI* minute() / 60 / 24 - TWO_PI / 4));
+        };
+    </script>
+</body>
+
+</html>
