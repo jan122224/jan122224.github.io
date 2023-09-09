@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="javascript">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多角形時計</title>
+    <style>
+        
+    body {
+        background-color: black; 
+    }
+    </style>
+</head>
+<body>
+    <p id="t"></p>
+    <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+    <script>
+        setInterval(function() {
+            let date = new Date();  
+            let time = date.toString().substring(0,25);
+            document.getElementById("t").innerText =  time;
+            document.getElementById("t").style.color ='white'
+        }, 1000 / 600);
+        
+        let Co = 0;
+
+        function setup() {
+            createCanvas(1250, 700);
+            
+        };
+        
+        function draw() {
+            background(0, 0, 0);
+            HOUR();
+            MINUTE();
+            SECOND();
+            MnD();
+            
+        };
+        function MnD() {
+            let n = 3
+            let cx = width / 2;
+            let cy = height / 2;
+            let d = 150;
+            let Mo = month();
+            let Da = day();
+            let sii = (72000 + 350 * sin(TWO_PI * Co / 3600)) / 72000;
+            for (let i = 0; i <= 180; i++) {
+                stroke(130, 130, 160 + 20 * sin(TWO_PI * Co / 7200));
+                strokeWeight(1);
+                line(cx + d * cos(TWO_PI * (i / n * sii - Co / 4800 - 0.25)),
+                    cy + d * sin(TWO_PI * (i / n * sii - Co / 4800 - 0.25)),
+                    cx + d * cos(TWO_PI * ((i + 1) * sii / n - Co / 4800 - 0.25)),
+                    cy + d * sin(TWO_PI * ((i + 1) * sii / n - Co / 4800 - 0.25)));
+
+
+            }; 
+            Co ++;
+        };
+        function HOUR() {
+            let n = 7;
+            let cx = width / 2;
+            let cy = height / 2;
+            let d = 600;
+            let sii = (72000 + 350 * sin(TWO_PI * Co / 3600)) / 72000;
+            for (let i = 0; i <= 180; i++) {
+                stroke(130, 130, 130 + 20 * sin(TWO_PI * Co / 7200));
+                strokeWeight(1);
+                line(cx + d * cos(TWO_PI * (i / n * sii  + Co / 7200 - 0.25)),
+                    cy + d * sin(TWO_PI * (i / n * sii + Co / 7200 - 0.25)),
+                    cx + d * cos(TWO_PI * ((i + 1) * sii / n + Co / 7200 - 0.25)),
+                    cy + d * sin(TWO_PI * ((i + 1) * sii / n + Co / 7200 - 0.25)));
+            };
+            Co ++;
+        };
+
+        function MINUTE() {
+            let n = 5
+            let cx = width / 2;
+            let cy = height / 2;
+            let d = 500;
+            let sii = (72000 + 350 * sin(TWO_PI * Co / 3600)) / 72000;
+            for (let i = 0; i <= 180; i++) {
+                stroke(130, 130, 140 + 20 * sin(TWO_PI * Co / 7200));
+                strokeWeight(1);
+                line(cx + d * cos(TWO_PI * (i / n * sii - Co / 4800 - 0.25)),
+                    cy + d * sin(TWO_PI * (i / n * sii - Co / 4800 - 0.25)),
+                    cx + d * cos(TWO_PI * ((i + 1) * sii / n - Co / 4800 - 0.25)),
+                    cy + d * sin(TWO_PI * ((i + 1) * sii / n - Co / 4800 - 0.25)));
+            }; 
+            Co ++;
+        };
+        
+        function SECOND() {
+            if (Co == 7200) {
+                Co = 0;
+            };
+            let n = 4;
+            let cx = width / 2;
+            let cy = height / 2;
+            let d = 300;
+            let sii = (72000 + 350 * sin(TWO_PI * Co / 3600)) / 72000;
+            for (let i = 0; i <= 180; i++) {
+                stroke(130, 130, 150 + 20 * sin(TWO_PI * Co / 7200));
+                strokeWeight(1);
+                line(cx + d * cos(TWO_PI * (i / n * sii + Co / 3600 - 0.25)),
+                    cy + d * sin(TWO_PI * (i / n * sii + Co / 3600 - 0.25)),
+                    cx + d * cos(TWO_PI * ((i + 1) * sii / n + Co / 3600 - 0.25)),
+                    cy + d * sin(TWO_PI * ((i + 1) * sii / n + Co / 3600 - 0.25)));
+            };
+            Co ++;
+        };
+
+    </script>
+</body>
+
+</html>
