@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <button id="textbutton">テキスト作成</button>
+  <button id="image">テキストを画像する</button>
+  <div id="inputdiv"></div>
+  <div id="textdiv"></div>
+  <img src="" id="result" />
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script>
+document.getElementById("image").addEventListener("click", () => {
+  document.getElementById("result").src = "";
+  //HTML内に画像を表示
+  html2canvas(document.body,{
+    onrendered: function(canvas){
+    //imgタグのsrcの中に、html2canvasがレンダリングした画像を指定する。
+    var imgData = canvas.toDataURL();
+    document.getElementById("result").src = imgData;
+    }});
+});
+
+</script>
+<script>
+  const textbutton = document.getElementById("textbutton");
+  const inputdiv = document.getElementById("inputdiv");
+  const textdiv = document.getElementById("textdiv");
+  
+  let hTag = [];
+  let inputs = [];
+  let numclassinput = 9;
+  
+  textbutton.addEventListener("click",() => {
+    
+    let hi = document.createElement("h");
+    let classNum = inputs.length / numclassinput;
+    let textStroke = ["16px", "0px"];
+    for (i = 0; i < textStroke.length; i++) {
+      hi = document.createElement("h");
+      hi.innerText = "左clickでメニュー表示"
+      hi.classList.add(classNum);
+      hi.style.fontWeight = "bold";
+      hi.style.webkitTextFillColor = "white";
+      hi.style.webkitTextStroke = textStroke[i];
+      hi.style.webkitTextStrokeColor = "black";
+      hi.style.fontSize ="50px";
+      hi.style.position = "absolute";
+      hi.style.top = 100 * (classNum + 1) + "px";
+      hi.style.left = "400px";
+      textdiv.appendChild(hi);
+    };
+
+    hTag = document.querySelectorAll("h");
+    hTag = [].slice.call(hTag);
+
+    let closebt = document.createElement("button");
+    closebt.style.display = "none";
+    closebt.innerText = "x閉じる";
+    closebt.classList.add("button" + classNum);
+    inputdiv.appendChild(closebt);
+
+    let divi = null;
+    let inputi = null;
+    divi = document.createElement("div");
+    divi.innerText = "テキスト";
+    divi.classList.add("div" + classNum);
+    divi.style.display = "none";
+    inputdiv.appendChild(divi);
+    inputi = document.createElement("input");
+    inputi.classList.add("input" + classNum);
+    inputi.placeholder = "テキストを入力"
+    inputi.style.display = "none";
+    inputi.style.height = "50px"
+    inputdiv.appendChild(inputi);
+
+    let divText = ["テキストの幅", "文字のサイズ", "ボーダーの太さ", "文字の色", "ストロークの色", "位置ｘ", "位置ｙ"];
+    let inputValue = ["400", "50", "16", "white", "black", "200", 100 * (classNum + 1)];
+    let inputType = ["number", "number", "number", "color", "color", "number", "number"];
+    
+    for (i = 0; i < divText.length; i++) {
+      divi = document.createElement("div");
+      divi.innerText = divText[i];
+      divi.classList.add("div" + classNum);
+      divi.style.display = "none";
+      inputdiv.appendChild(divi);
+      inputi = document.createElement("input");
+      inputi.classList.add("input" + classNum);
+      inputi.type = inputType[i];
+      inputi.value = inputValue[i];
+      inputi.style.display = "none";
+      inputi.style.height = "20px"
+      inputdiv.appendChild(inputi);
+    };
+
+    divi = document.createElement("div");
+    divi.innerText = "書体";
+    divi.classList.add("div" + classNum);
+    divi.style.display = "none";
+    inputdiv.appendChild(divi);
+    inputi = document.createElement("input");
+    inputi.classList.add("input" + classNum);
+    inputi.style.display = "none";
+    inputdiv.appendChild(inputi);
+
+    inputs = document.querySelectorAll("input");
+    inputs = [].slice.call(inputs);
+
+    inputs.forEach(input => {
+
+      input.addEventListener("input", () => {
+        let ClassInputName = input.className;
+        let ClassInputNum = ClassInputName.substring(5);
+        let classH = document.getElementsByClassName(ClassInputNum);
+        classH = [].slice.call(classH);
+        let inputCateg = inputs.indexOf(input) % numclassinput;
+        classH.forEach(h => {
+          if (inputCateg == 0) {
+            h.innerText = input.value;
+            elementScaleX(h, inputs[numclassinput * h.className + 1]);
+          } else if (inputCateg == 1) {
+            elementScaleX(h, inputs[numclassinput * h.className + 1]);
+          } else if (inputCateg == 2) {
+            h.style.fontSize = input.value + "px";
+          } else if (inputCateg == 3) {
+            classH[0].style.webkitTextStroke = input.value + "px";
+            classH[0].style.webkitTextStrokeColor = inputs[numclassinput * h.className + 5].value;
+          } else if (inputCateg == 4) {
+            h.style.webkitTextFillColor = input.value;
+          } else if (inputCateg == 5) {
+            classH[0].style.webkitTextStrokeColor = input.value;
+          } else if (inputCateg == 6) {
+            h.style.left = input.value + "px";
+          } else if (inputCateg == 7) {
+            h.style.top = input.value + "px";
+          }
+        });
+      });
+    });
+
+    hTag.forEach (h => {
+      h.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+        let classCloseBt = [];
+        let classInput = [];
+        let classDiv = [];
+        
+        classCloseBt = document.getElementsByClassName("button" + h.className);
+        classCloseBt = [].slice.call(classCloseBt);
+        classCloseBt.forEach (closebt => {
+          closebt.style.display = "block";
+          
+          closebt.addEventListener("click", () => {
+            let closebtclassname = closebt.className;
+            let BlockClassNum = closebtclassname.substring(6);
+            ElementsDisplay(classCloseBt, "none");
+            ElementsDisplay(classDiv, "none");
+            ElementsDisplay(classInput, "none");
+          });
+        });
+
+        classDiv = document.getElementsByClassName("div" + h.className);
+        classDiv = [].slice.call(classDiv);
+        ElementsDisplay(classDiv, "block");
+
+        classInput = document.getElementsByClassName("input" + h.className);
+        classInput = [].slice.call(classInput);
+        ElementsDisplay(classInput, "block");
+      });
+
+      let flagD = false;
+      let moveH = [];
+      h.addEventListener("mousedown", (event) => {
+        event.preventDefault();
+        flagD = true;
+        moveH = document.getElementsByClassName(h.className);
+        moveH = [].slice.call(moveH);
+      });
+
+      document.addEventListener("mousemove", (event) => {
+        event.preventDefault();
+        let mouseX = event.clientX;
+        let mouseY = event.clientY;
+        if (flagD == true) {
+          moveH.forEach(h => {
+            h.style.left = mouseX + "px";
+            h.style.top = mouseY + "px";
+          });
+        };
+      });
+
+      document.addEventListener("mouseup", () => {
+        flagD = false;
+      });
+    });
+  });
+
+
+  let ElementsDisplay = (Elements, blockOrnone) => {
+    Elements.forEach(element => {
+      element.style.display = blockOrnone;
+    });
+  };
+
+  let elementScaleX = (element, input) => {
+    let scalex = input.value / element.clientWidth;
+    element.style.transform = "scale(" + scalex + ", 1)"
+  };
+</script>
+</html>
