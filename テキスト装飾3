@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>テキスト装飾３</title>
+</head>
+<body>
+    <div>
+    <button id="button">テキストボックス</button>
+    </div>
+    <div id="inputdiv"></div>
+    <div id="textdiv"></div>
+    <script>
+        const button = document.getElementById('button');
+        const inputdiv = document.getElementById('inputdiv');
+        const textdiv = document.getElementById('textdiv');
+        let Inputs = [];
+        let inputs = document.querySelectorAll('input');
+        let P1 = document.querySelectorAll('p1');
+        button.addEventListener('click', () => {
+            let div = document.createElement('div');
+            inputdiv.appendChild(div);
+            let inputtext = document.createElement('input');
+            inputtext.placeholder = "テキストを入力"
+            div.appendChild(inputtext);
+            
+            let div1 = document.createElement('div');
+            inputdiv.appendChild(div1);
+            
+            let rabelw = document.createElement('rabel');
+            rabelw.innerText = '幅'
+            div1.appendChild(rabelw);
+            let inputw = document.createElement('input');
+            inputw.style.width = '40px';
+            inputw.value = '200';
+            div1.appendChild(inputw);
+
+            let rabelsi = document.createElement('rabel');
+            rabelsi.innerText = 'サイズ'
+            div1.appendChild(rabelsi);
+            let inputsi = document.createElement('input');
+            inputsi.style.width = '40px';
+            inputsi.value = '100';
+            div1.appendChild(inputsi);
+
+            let div2 = document.createElement('div');
+            inputdiv.appendChild(div2);
+
+            let rabelx = document.createElement('rabel');
+            rabelx.innerText = 'x'
+            div2.appendChild(rabelx);
+            let inputx = document.createElement('input');
+            inputx.style.width = '40px';
+            inputx.value = '100';
+            div2.appendChild(inputx);
+
+            let rabely = document.createElement('rabel');
+            rabely.innerText = 'y'
+            div2.appendChild(rabely);
+            let inputy = document.createElement('input');
+            inputy.style.width = '40px';
+            inputy.value = '100';
+            div2.appendChild(inputy);
+            
+            inputs = document.querySelectorAll('input');
+            inputevents =['input', 'mousemove'];
+            inputevents.forEach(event => {
+            inputs.forEach(el => {
+                document.addEventListener(event, ()=> {
+                    textdiv.innerHTML = '';
+                    Inputs = [];
+                    for (i = 0; i < inputs.length / 5; i++) {
+                        let Input = {
+                            clas: i,
+                            text: inputs[5 * i].value,
+                            widt: inputs[5 * i + 1].value,
+                            fsiz: inputs[5 * i + 2].value,
+                            xpos: inputs[5 * i + 3].value,
+                            ypos: inputs[5 * i + 4].value
+                        };
+                        Inputs.push(Input);
+                    };
+                    
+                    Inputs.forEach(el => {
+                        for (i = 1; i <= el.text.length; i++){
+                            let Xposi = 1 * el.xpos + el.widt / el.text.length * i
+                            let p1 = document.createElement('p1');
+                            p1.classList.add(el.clas);
+                            p1.innerText = el.text.substring(i -1, i);
+                            p1.style.fontWeight = "bold";
+                            p1.style.webkitTextFillColor ="white"
+                            p1.style.webkitTextStroke = "16px black"
+                            p1.style.fontSize = el.fsiz + "px";
+                            p1.style.position = "absolute";
+                            p1.style.top = el.ypos + "px";
+                            p1.style.left = Xposi + "px";
+                            textdiv.appendChild(p1);
+
+                            let p2 = document.createElement('p1');
+                            p2.classList.add(el.clas);
+                            p2.innerText = el.text.substring(i -1, i);
+                            p2.style.fontWeight = "bold";
+                            p2.style.webkitTextFillColor ="white"
+                            // p2.style.webkitTextStroke = "16px black"
+                            p2.style.fontSize = el.fsiz + "px";
+                            p2.style.position = "absolute";
+                            p2.style.top = el.ypos + "px";
+                            p2.style.left = Xposi + "px";
+                            textdiv.appendChild(p2);
+
+                            let P1 = document.querySelectorAll('p1');
+                            P1.forEach(p1 => {
+                                let Dragflag = false;
+                                p1.addEventListener('mousedown',(event) =>{
+                                    event.preventDefault();
+                                    let sx = event.clientX;
+                                    let sy = event.clientY;
+                                    Dragflag = true;
+                                });
+                                
+                                document.addEventListener('mousemove',(event) => {
+                                    if (Dragflag == true) {
+                                        let x = event.clientX;
+                                        let y = event.clientY;
+                                        
+                                        let Num = p1.className
+                                        inputs[5 * Num + 3].value = x
+                                        inputs[5 * Num + 4].value = y
+                                        
+                                    };
+                                });
+
+                                document.addEventListener('mouseup', () => {
+                                    Dragflag = false;
+                                });
+                            });
+                        };
+                    });
+                });    
+            });    
+            });
+        });
+        
+    
+
+    </script>
+</body>
+</html>
