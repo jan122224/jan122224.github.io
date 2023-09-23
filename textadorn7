@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<title>Document</title>
+</head>
+<body> 
+	<canvas id="canvas" style="position: absolute;top: 100px;left: 200px;"width="570" height="350"></canvas>
+	<button id="textbutton">テキスト作成</button>
+	<button id="canvasmenue">キャンパスの大きさ</button>
+	<div id="inputdiv"></div>
+	
+	<script>
+		let canvasWH = [570, 350];
+		const canvas = document.getElementById("canvas");
+		const c = canvas.getContext("2d");
+		const textbutton = document.getElementById("textbutton");
+		const canvasmenue = document.getElementById("canvasmenue");
+		const inputdiv = document.getElementById("inputdiv");
+		const textdiv = document.getElementById("textdiv");
+		
+		let draw = () => {
+			let inputT = document.getElementsByClassName("InputText");
+			c.beginPath();
+			c.clearRect(0, 0, canvasWH[0], canvasWH[1]);
+			
+			c.beginPath();
+			c.arc(0, 0, 5, 0, 2 * Math.PI);
+			c.fillStyle = "rgb(0, 0, 0)"
+			c.fill();
+
+			c.beginPath();
+			c.arc(0, canvasWH[1], 5, 0, 2 * Math.PI);
+			c.fillStyle = "rgb(0, 0, 0)"
+			c.fill();
+
+			c.beginPath();
+			c.arc(canvasWH[0], 0, 5, 0, 2 * Math.PI);
+			c.fillStyle = "rgb(0, 0, 0)"
+			c.fill();
+			
+			c.beginPath();
+			c.arc(canvasWH[0], canvasWH[1], 5, 0, 2 * Math.PI);
+			c.fillStyle = "rgb(0, 0, 0)"
+			c.fill();
+			
+			for (i = 0; i < inputT.length / 9; i++) {
+				c.beginPath();
+				c.font = inputT[9 * i + 2].value + "px 'Aliel'"
+				c.strokeStyle = inputT[9 * i + 5].value;
+				c.lineWidth = inputT[9 * i + 3].value;
+				c.strokeText(inputT[9 * i].value, inputT[9 * i + 6].value, inputT[9 * i + 7].value,inputT[9 * i + 1].value);
+
+				c.beginPath();
+				c.font = inputT[9 * i + 2].value + "px 'Aliel'"
+				c.fillStyle = inputT[9 * i + 4].value;
+				c.lineWidth = 0;
+				c.fillText(inputT[9 * i].value, inputT[9 * i + 6].value, inputT[9 * i + 7].value,inputT[9 * i + 1].value);
+			};
+			
+			window.requestAnimationFrame(draw);
+		};
+		window.requestAnimationFrame(draw);
+
+		let classNum = document.getElementsByClassName("divravel").length / 9
+		textbutton.addEventListener("click", () => {
+
+			let divi = null;
+			let inputi = null;
+
+			divi = document.createElement("div");
+			inputdiv.appendChild(divi);
+			buttonDetail = document.createElement("button");
+			buttonDetail.classList.add("detail" + classNum);
+			buttonDetail.classList.add("detail");
+			buttonDetail.innerText = "テキスト" + (classNum + 1) + "詳細";
+			divi.appendChild(buttonDetail);
+			
+			let buttonDetails = document.getElementsByClassName("detail");
+			buttonDetails = [].slice.call(buttonDetails);
+			buttonDetails.forEach(Detail => {
+				Detail.addEventListener("click", () => {
+					let index = buttonDetails.indexOf(Detail);
+					let inputs = document.getElementsByClassName("InputText");
+					let divravels = document.getElementsByClassName("divravel");
+					let flag = inputs[9 * index].style.display
+					console.log(flag)
+					for (i = 0; i < inputs.length; i ++) {
+						inputs[i].style.display = "none";
+						divravels[i].style.display = "none";
+					};
+
+					for (j = 0; j < 9; j ++) {
+						inputs[9 * index + j].style.display = "block";
+						divravels[9 * index + j].style.display = "block";
+					};
+				});
+			});
+
+			divi = document.createElement("div");
+			divi.innerText = "テキスト";
+			divi.classList.add("div" + classNum);
+			divi.classList.add("divravel");
+			divi.style.display = "block"
+			inputdiv.appendChild(divi);
+			inputi = document.createElement("input");
+			inputi.classList.add("InputText");
+			inputi.placeholder = "テキストを入力"
+			inputi.style.height = "50px"
+			inputi.style.display = "block"
+			inputdiv.appendChild(inputi);
+
+			let divText = ["テキストの幅", "文字のサイズ", "ボーダーの太さ", "文字の色", "ストロークの色", "位置ｘ", "位置ｙ"];
+			let inputValue = ["550", "50", "8", "#fcfcfc", "black", "10", 100 * (classNum + 1)];
+			let inputType = ["number", "number", "number", "color", "color", "number", "number"];
+			
+			for (i = 0; i < divText.length; i++) {
+				divi = document.createElement("div");
+				divi.innerText = divText[i];
+				divi.classList.add("divravel");
+				divi.classList.add("div" + classNum);
+				divi.style.display = "block"
+				inputdiv.appendChild(divi);
+				inputi = document.createElement("input");
+				inputi.classList.add("InputText");
+				inputi.type = inputType[i];
+				inputi.value = inputValue[i];
+				inputi.style.height = "20px"
+				inputi.style.display = "block"
+				inputdiv.appendChild(inputi);
+			};
+
+			divi = document.createElement("div");
+			divi.innerText = "書体";
+			divi.classList.add("divravel");
+			divi.classList.add("div" + classNum);
+			divi.style.display = "block"
+			inputdiv.appendChild(divi);
+			inputi = document.createElement("input");
+			inputi.classList.add("InputText");
+			inputi.style.display = "block"
+			inputdiv.appendChild(inputi);
+
+			classNum = document.getElementsByClassName("divravel").length / 9
+		});
+
+		let closebt = null;
+		canvasmenue.addEventListener("click", () => {
+			let WidthHeight = ["横幅", "高さ"];
+			let divi = null;
+			let inputi = null;
+			
+			if (document.getElementsByClassName("inputcanvas").length == 0) {
+				closebt = document.createElement("button");
+				closebt.innerText = "閉じるX"
+				inputdiv.appendChild(closebt);
+
+				closebt.addEventListener("click", () => {
+					closebt.style.display = "none";
+					let targetclass = ["inputcanvas", "divcanvas"]
+					for (i = 0; i < targetclass.length; i++) {
+						let targets = document.getElementsByClassName(targetclass[i]);
+						targets[0].style.display = "none";
+						targets[1].style.display = "none";
+					};
+				});
+
+				for (i = 0; i < canvasWH.length; i++) {
+					divi = document.createElement("div");
+					divi.innerText = WidthHeight[i];
+					divi.classList.add("divcanvas");
+					inputdiv.appendChild(divi);
+					inputi = document.createElement("input");
+					inputi.classList.add("inputcanvas");
+					inputi.type = "number";
+					inputi.style.height = "30px";
+					inputi.value = canvasWH[i];
+					inputdiv.appendChild(inputi);
+				};
+			} else {
+				closebt.style.display = "block";
+				let targetclass = ["inputcanvas", "divcanvas"]
+				for (i = 0; i < targetclass.length; i++) {
+						let targets = document.getElementsByClassName(targetclass[i]);
+						targets[0].style.display = "block";
+						targets[1].style.display = "block";
+				};
+			};
+			document.addEventListener("input", () => {
+				let inputcanvas = document.getElementsByClassName("inputcanvas");
+				canvas.width = inputcanvas[0].value;
+				canvas.height = inputcanvas[1].value;
+			});
+		});
+
+</script>
+</body>
+</html>
