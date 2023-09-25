@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clock1</title>
+</head>
+<body style="background-color: black;">
+    <script>
+        let twoPI = 2 * Math.PI
+let sin = (x) => {return Math.sin(x)};
+let cos = (x) => {return Math.cos(x)};
+
+let width = 1000;
+let height = 600;
+let canvas = document.createElement("canvas");
+let c = canvas.getContext("2d");
+document.body.appendChild(canvas);
+canvas.width = width;
+canvas.height = height;
+
+
+let draw = () => {
+    let now = new Date();
+    let mmsec = now.getMilliseconds();
+    let sec = now.getSeconds() + now.getMilliseconds() / 1000;
+    let min = now.getMinutes();
+    let hour = now.getHours();
+    let cx = width / 2;
+    let cy = height / 2;
+    let R = 100;
+    let n = 60;
+    let dx = width / n;
+    
+    c.beginPath();
+    c.fillStyle = "rgb(0, 0, 0)";
+    c.fillRect(0, 0, width, height);
+    c.closePath();
+
+    let romanum = ["II", "III", "IV", "V", "VI", "VII", "VII", "VIII", "IX", "X", "XI"]
+    for(i = 1; i < 12; i ++) {
+        c.beginPath();
+        c.strokeStyle = "rgb(255, 255, 255)";
+        c.strokeText(romanum[i - 1], width * i / 12 - 5, cy + 30);
+        c.moveTo(width * i / 12, cy);
+        c.lineTo(width * i / 12, cy + 10);
+        c.lineWidth = 1;
+        c.stroke();
+        c.closePath();
+    };
+
+
+    n = 24;
+    dx = width / n;
+    for (i = 0; i <= n; i++) {
+        c.beginPath();
+        c.arc(dx * i,cy + R * sin(2 * twoPI * (sec / 60 - i / n)), 4, 0, twoPI, true);
+        c.lineWidth = 2;
+        if (i == now.getHours()) {
+            c.fillStyle = "rgb(200," + 200 + ", 200)";
+        } else {
+            c.fillStyle = "rgb(200," + 0 + ", 200)";
+        };
+        c.fill();
+        c.closePath();
+    };
+
+    n = 60;
+    dx = width / n;
+    for (i = 0; i <= n; i++) {
+        c.beginPath();
+        c.arc(dx * i,cy + R * sin(2 * twoPI * (sec / 60 - i / n) - twoPI / 4), 4, 0, twoPI, true);
+        c.lineWidth = 2;
+        if (i == now.getMinutes()) {
+            c.fillStyle = "rgb(200," + 200 + ", 200)";
+        } else {
+            c.fillStyle = "rgb(200," + 0 + ", 200)";
+        };
+        c.fill();
+        c.closePath();
+    };
+
+    for (i = 0; i <= n; i++) {
+        c.beginPath();
+        c.arc(dx * i,cy + R * sin(2 * twoPI * (sec / 60 - i / n) - twoPI  / 2), 4, 0, twoPI, true);
+        if (i == now.getSeconds()) {
+            c.fillStyle = "rgb(200," + 200 + ", 200)";
+        } else {
+            c.fillStyle = "rgb(200," + 0 + ", 200)";
+        };
+        c.fill();
+        c.closePath();
+    };
+
+    window.requestAnimationFrame(draw);
+};
+
+window.requestAnimationFrame(draw);
+    </script>
+</body>
+</html>
