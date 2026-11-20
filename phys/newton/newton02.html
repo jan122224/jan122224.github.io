@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>楽しい科学チャンネル</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div>
+        <a href="https://jan122224.github.io/">ホーム</a>＞<a href="https://jan122224.github.io/phys/index.html">ニュートン力学</a>＞ニュートン力学の基本法則
+    </div>
+    <h1>ニュートン力学の基本法則</h1>
+    <h2>加速度、運動量</h2>
+    <div>
+        加速度\(\boldsymbol{a}\)を速度\(\boldsymbol{v}\)の時間微分によって定義します。
+        \[\boldsymbol{a}=\frac{d\boldsymbol{v}}{dt}\]
+        運動量\(\boldsymbol{p}\)を質量\(m\)と速度\(\boldsymbol{v}\)の積によって定義します。
+        \[\boldsymbol{p}=m\boldsymbol{v}\]
+        運動量の時間微分は、
+        \[\frac{d}{dt}\boldsymbol{p}=\lim_{\varDelta t\to0}\frac{m\boldsymbol{v}(t+\varDelta t)-m\boldsymbol{v}(t)}{\varDelta t}\]
+        \[=m\lim_{\varDelta t\to0}\frac{\boldsymbol{v}(t+\varDelta t)-\boldsymbol{v}(t)}{\varDelta t}=m\boldsymbol{a}\]
+        運動量と加速度の積となります。ちなみに等速直線運動では、速度は時間に依らず一定のベクトルなので、
+        \[\boldsymbol{a}=\frac{\boldsymbol{v}-\boldsymbol{v}}{\varDelta t}=\boldsymbol{0}\]
+        加速度は\(\boldsymbol{0}\)となります。速度に変化があれば加速度は\(\boldsymbol{a}=\boldsymbol{0}\)とならないので、加速度は速度がどれだけ変化するかを表す物理量となります。これらの物理量が何を表すかをこの後のニュートン力学の基本法則によって説明していきます。
+    </div>
+    <h2>ニュートン力学第1法則</h2>
+    <div>
+        　ニュートン力学第1法則は慣性の法則とも呼ばれます。力を受けていない物体は静止もしくは等速直線運動を続けるという法則です。力を受けていない静止している物体が静止し続けるのは分かると思いますが、ボールを転がすとまっすぐ進みますが、そのうち止まってしまいます。我々が住む地球の地表には空気があり、運動するとそれと逆方向に空気抵抗が働きます。地面を転がるボールに対しても地面との摩擦力が生じます。摩擦や空気抵抗がなければ、一定速度で直線運動を続けるということです。
+    </div>
+    <h2>ニュートン力学第2法則</h2>
+    <div>
+        　ニュートン力学第2法則は運動の法則とも呼ばれます。物体にはたらく力\(\boldsymbol{F}\)を運動量の時間微分によって定義します。
+        \[\boldsymbol{F}=\frac{d}{dt}\boldsymbol{p}=m\boldsymbol{a}\]
+        質量と加速度の積とも言えますね。物体に力が働いていなければ、\(\boldsymbol{F}=\boldsymbol{0}\iff\boldsymbol{a}=\boldsymbol{0}\)なので等速直線運動となりニュートン力学第1法則とも矛盾していません。力を定義する前に第1法則で力という言葉を使っていますが、寛大な心で見てあげましょう。
+    </div>
+    <h2>ニュートン力学第3法則</h2>
+    <div>
+        　ニュートン力学第3法則は作用反作用の法則とも呼ばれます。2物体の衝突による力は、物体1から物体2に加わる力\(\boldsymbol{F}_{1\to2}\)と物体2から物体1に加わる力\(\boldsymbol{F}_{2\to1}\)は同一作用線上で逆向きにはたらきます。
+        \[\boldsymbol{F}_{1\to2}=-\boldsymbol{F}_{2\to1}\]
+        机に置かれた物体は、机に重力\(\boldsymbol{F}_g\)を与えますが、物体は加速度運動を始めず、机の上で静止し続けるのは、机から物体に垂直抗力\(\boldsymbol{N}\)(押し返す力)がはたらくためです。
+        \[\boldsymbol{N}=-\boldsymbol{F}_g\]
+    </div>
+    <div>
+        　これら３つの法則をまとめてニュートン力学の基本法則といいます。これらの法則は数学で言うところの原理や公理であり、これをさらに細かく説明することはしません。この３つの法則を用いていろいろな物理現象を説明していきます。
+    </div>
+</body>
+</html>
